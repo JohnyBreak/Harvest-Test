@@ -12,6 +12,8 @@ public class PlayerTouchMovement : MonoBehaviour
     private PlayerAnimator _anim;
     private bool _canMove = true;
 
+    public Vector3 PlayerCameraRelativeDirection => GetCameraRelativeMoveDirection();
+
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -40,7 +42,20 @@ public class PlayerTouchMovement : MonoBehaviour
         _agent.Move(movement);
     }
 
-    private void OnDestroy()
+    private Vector3 GetCameraRelativeMoveDirection()
     {
+        Vector3 cameraForward = Camera.main.transform.forward;
+        Vector3 cameraRight = Camera.main.transform.right;
+        cameraForward.y = 0;
+        cameraRight.y = 0;
+        cameraForward = cameraForward.normalized;
+        cameraRight = cameraRight.normalized;
+
+        Vector3 forwardCameraRelativeMovement = cameraForward * _joystick.Direction.y;
+        Vector3 rightCameraRelativeMovement = cameraRight * _joystick.Direction.x;
+        Vector3 cameraRelativeMovement = forwardCameraRelativeMovement + rightCameraRelativeMovement;
+
+        Debug.DrawRay(transform.position, cameraRelativeMovement, Color.black);
+        return cameraRelativeMovement;
     }
 }

@@ -1598,6 +1598,8 @@ MonoBehaviour:
   _stakHolder: {fileID: 1938520763}
   _blockOffset: 0.3
   _maxBlocksInStack: 40
+  _moveDelta: 0.12
+  _timeDelta: 2
 --- !u!114 &223704440
 MonoBehaviour:
   m_ObjectHideFlags: 0
